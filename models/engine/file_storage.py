@@ -1,7 +1,9 @@
 #!/usr/bin/python3
 """Defines the FileStorage class"""
+
 import json
 from models.base_model import BaseModel
+import os
 
 
 class FileStorage:
@@ -13,6 +15,10 @@ class FileStorage:
     """
     __file_path = "file.json"
     __objects = {}
+
+    def __init__(self):
+        """init method"""
+        super().__init__()
 
     def all(self):
         """returns the dictionary of objects"""
@@ -43,3 +49,16 @@ class FileStorage:
                     self.new(eval(cls_name)(**o))
         except FileNotFoundError:
             return
+
+    def update(self, obj_name, obj_id, attr, value):
+        """updates object with id 'obj_id'"""
+        model = self.__objects["{}.{}".format(obj_name, obj_id)]
+        setattr(model, attr, value)
+
+    def find(self, obj_name, obj_id):
+        """find object with id 'obj_id'"""
+        return self.__objects["{}.{}".format(obj_name, obj_id)]
+
+    def delete(self, obj_name, obj_id):
+        """deletes object with id 'obj_id'"""
+        return self.__objects.pop("{}.{}".format(obj_name, obj_id))
