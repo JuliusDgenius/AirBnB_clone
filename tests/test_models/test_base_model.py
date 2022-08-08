@@ -11,7 +11,7 @@ BaseModel = models.base_model.BaseModel
 mdoc = models.base_model.__doc__
 
 
-class TestBaseModelDocs(unttest.TestCase):
+class TestBaseModelDocs(unittest.TestCase):
     """Tests to check the documentation and style of BaseModel class"""
 
     @classmethod

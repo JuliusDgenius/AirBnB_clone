@@ -12,8 +12,7 @@ from models.review import Review
 
 
 class FileStorage:
-    """Represents the file storage for AirBnB project.
-    Initialize a new Base.
+    """serializes instances to a JSON file and deserializes JSON to instances..
     Args:
     __file_path(str): pathname of file.
     __objects (dict): where objects of the class are stored.
