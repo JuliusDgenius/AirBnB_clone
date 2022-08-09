@@ -87,18 +87,18 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, args):
         """Usage: create <class> <key 1>=<value> ...
-        create a new cls instance with given keys/values and prints its id"""
-        d_list = args.split()
-        if not d_list:
-            print('** class name missing **')
-        elif d_list[0] not in HBNBCommand.__classes:
-            print('** class doesn\'t exist **')
+        create a new class instance and prints its id"""
+        obj = None
+        if args == 'BaseModel':
+            obj = BaseModel()
+        elif args == 'User':
+            obj = User()
+        elif args == 'State':
+            obj == State()
+        if obj is not None:
+            print(obj.id)
         else:
-            my_object = eval(d_list[0] + '()')
-
-            for i in range(1, len(d_list)):
-                result = d_list[i].split('=')
-                result[1] = result[1].replace('_', ' ')
+            print("** class name doesn't exit **")
 
     def do_show(self, arg):
         """
@@ -205,4 +205,4 @@ class HBNBCommand(cmd.Cmd):
 
 
 if __name__ == '__main__':
-    HBNBCommand().cmdloop()
+     HBNBCommand().cmdloop()
