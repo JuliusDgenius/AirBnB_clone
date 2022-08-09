@@ -157,8 +157,8 @@ class HBNBCommand(cmd.Cmd):
             try:
                 model = models.classes[arg]
                 resp = []
-                for l in models.storage.all().values():
-                    if type(l) == model:
+                for length in models.storage.all().values():
+                    if type(length) == model:
                         resp.append(l.__str__())
                 print(resp)
             except Exception as e:
