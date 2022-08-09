@@ -44,8 +44,10 @@ class BaseModel:
 
     def to_dict(self):
         """returns a dict containing all keys/values"""
-        ndict = self.__dict__.copy()
-        ndict.update({"created_at": self.created_at.isoformat()})
-        ndict.update({"updated_at": self.updated_at.isoformat()})
-        ndict.update({"__class__": self.__class__.__name__})
-        return (ndict)
+        dict_rep = {}
+        for k, v in self.__dict__.items():
+            dict_rep[k] = v
+            if isinstance(v, datetime):
+                dict_rep[k] = v.strftime('%Y-%m-%dT%H:%M:%S.%f')
+        dict_rep["__class__"] = type(self).__name__
+        return dict_rep
