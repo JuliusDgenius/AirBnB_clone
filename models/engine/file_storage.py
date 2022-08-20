@@ -2,6 +2,7 @@
 """Defines the FileStorage class"""
 
 import json
+import os
 from models.base_model import BaseModel
 from models.user import User
 from models.state import State
@@ -43,16 +44,22 @@ class FileStorage:
             json.dump(objdict, f)
 
     def reload(self):
-        """converts back to object if file exist"""
-        try:
-            with open(FileStorage.__file_path) as f:
-                objdict = json.load(f)
-                for o in objdict.values():
-                    cls_name = o["__class__"]
-                    del o["__class__"]
-                    self.new(eval(cls_name)(**o))
-        except FileNotFoundError:
+        """deserializes the JSON file to __objects"""
+        
+        file = FileStorage.__file_path
+        if not os.path.exists(file):
             return
+        try:
+            with open(file, mode="r+", encoding="utf-8") as f:
+                file_string = f.read()
+                data = json.loads(file_string)
+                for object_key, model_data in data.items():
+                    model_name, model_id = object_key.split('.')
+                    model = models.classes[model_name](**model_data)
+                    self.new(model)
+
+        except Exception as e:
+            print(e)
 
     def update(self, obj_name, obj_id, attr, value):
         """updates object with id 'obj_id'"""
