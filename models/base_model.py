@@ -9,11 +9,26 @@ class BaseModel:
     Args:
         id (int): The instance uuid
     """
-    def __init__(self, id=None, created_at=None, updated_at=None):
-        """Initializes object instance"""
-        self.id = str(uuid4())
-        self.created_at = datetime.now()
-        self.updated_at = datetime.now()
+    def __init__(self, *args, **kwargs):
+        """Initializes object instance
+        Args:
+            *args: Takes as many non-keyworded arguments
+            **kwargs: Takes as many keyworded arguments
+        """
+        time_format = "%Y-%m-%dT%H:%M:%S.%f"
+        if kwargs:
+            for key, value in kwargs.items():
+                if key == "__class__":
+                    continue
+                elif key == "created_at" or key == "updated_at":
+                    time = datetime.strptime(value, time_format)
+                    setattr(self, key, time)
+                else:
+                    setattr(self, key, value)
+        else:
+            self.id = str(uuid4())
+            self.created_at = datetime.now()
+            self.updated_at = datetime.now() 
 
     def __str__(self):
         """String representation of the class instance"""
