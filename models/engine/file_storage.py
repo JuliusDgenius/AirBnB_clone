@@ -3,13 +3,7 @@
 
 import json
 import os
-from models.base_model import BaseModel
-from models.user import User
-from models.state import State
-from models.city import City
-from models.place import Place
-from models.amenity import Amenity
-from models.review import Review
+import datetime
 
 
 class FileStorage:
@@ -60,14 +54,14 @@ class FileStorage:
             print(e)
 
     def update(self, obj_name, obj_id, attr, value):
-        """updates object with id 'obj_id'"""
+        """updates object with id 'obj_id"""
         model = self.__objects["{}.{}".format(obj_name, obj_id)]
         setattr(model, attr, value)
 
     def find(self, obj_name, obj_id):
-        """find object with id 'obj_id'"""
+        """find object with id 'obj_id"""
         return self.__objects["{}.{}".format(obj_name, obj_id)]
 
     def delete(self, obj_name, obj_id):
-        """deletes object with id 'obj_id'"""
+        """deletes object with id 'obj_id"""
         return self.__objects.pop("{}.{}".format(obj_name, obj_id))

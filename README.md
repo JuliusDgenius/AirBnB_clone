@@ -14,3 +14,6 @@ of the website but will cover all fundamental concepts of the higher level progr
      EOF  help  quit
 
      (hbnb)
+* Example:
+    - $ ./console.py <ENTER>
+    (hbnb) <COMMAND>
