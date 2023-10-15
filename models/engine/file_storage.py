@@ -24,34 +24,47 @@ class FileStorage:
         return FileStorage.__objects
 
     def new(self, obj):
-        """converts object to JSON and store in file"""
-        obj_cls_name = obj.__class__.__name__
-        FileStorage.__objects["{}.{}".format(obj_cls_name, obj.id)]= obj
+        """sets in __objects the obj with key <obj class name>.id"""
+        k = "{}.{}".format(type(obj).__name__, obj.id)
+        FileStorage.__objects[k] = obj
 
     def save(self):
         """converts object to JSON and store in file"""
-        odict = FileStorage.__objects
-        objdict = {obj: odict[obj].to_dict() for obj in odict.keys()}
-        with open(FileStorage.__file_path, "w") as f:
-            json.dump(objdict, f)
+        with open(FileStorage.__file_path, "w", encoding="utf-8") as f:
+            dct = {key: value.to_dict() for key, value in
+                      FileStorage.__objects.items()}
+            json.dump(dct, f)
+
+    def classes(self):
+        """Returns a dictionary of valid classes and their references"""
+        from models.base_model import BaseModel
+        from models.user import User
+        from models.state import State
+        from models.city import City
+        from models.amenity import Amenity
+        from models.place import Place
+        from models.review import Review
+
+        classes = {"BaseModel": BaseModel,
+                   "User": User,
+                   "State": State,
+                   "City": City,
+                   "Amenity": Amenity,
+                   "Place": Place,
+                   "Review": Review}
+        return classes
 
     def reload(self):
         """deserializes the JSON file to __objects"""
 
         file = FileStorage.__file_path
-        if not os.path.exists(file):
+        if not os.path.isfile(FileStorage.__file_path):
             return
-        try:
-            with open(file, mode="r+", encoding="utf-8") as f:
-                file_string = f.read()
-                data = json.loads(file_string)
-                for object_key, model_data in data.items():
-                    model_name, model_id = object_key.split('.')
-                    model = models.classes[model_name](**model_data)
-                    self.new(model)
-
-        except Exception as e:
-            print(e)
+        with open(FileStorage.__file_path, "r", encoding="utf-8") as f:
+            ob_dict = json.load(f)
+            ob_dict = {key: self.classes()[val["__class__"]](**val)
+                        for key, val in ob_dict.items()}
+            FileStorage.__objects = ob_dict
 
     def update(self, obj_name, obj_id, attr, value):
         """updates object with id 'obj_id"""
