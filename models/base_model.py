@@ -13,19 +13,19 @@ class BaseModel:
     def __init__(self, *args, **kwargs):
         """Initialize a new Base.
         Args:
-            *args: as many arguments.
-            **kwargs: key/pair value arguments.
+            *args: as many keyworded arguments passed.
+            **kwargs: key/value pair arguments as passed.
         """
-        tformat = "%Y-%m-%dT%H:%M:%S.%f"
+        time_format = "%Y-%m-%dT%H:%M:%S.%f"
         if kwargs:
-            for k, v in kwargs.items():
-                if k == "__class__":
+            for key, value in kwargs.items():
+                if key == "__class__":
                     continue
-                elif k == "created_at" or k == "updated_at":
-                    time = datetime.strptime(v, tformat)
-                    setattr(self, k, time)
+                elif key == "created_at" or key == "updated_at":
+                    time = datetime.strptime(value, time_format)
+                    setattr(self, key, time)
                 else:
-                    setattr(self, k, v)
+                    setattr(self, key, value)
         else:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
@@ -33,7 +33,7 @@ class BaseModel:
             models.storage.new(self)
 
     def __str__(self):
-        """return the print/str representation of the BaseModel instance"""
+        """return the string rep of the BaseModel instance"""
         clsname = self.__class__.__name__
         return ("[{}] ({}) {}".format(clsname, self.id, self.__dict__))
 
@@ -43,7 +43,7 @@ class BaseModel:
         models.storage.save()
 
     def to_dict(self):
-        """returns a dict containing all keys/values"""
+        """returns a dict containing all key/value pairs"""
         ndict = self.__dict__.copy()
         ndict.update({"created_at": self.created_at.isoformat()})
         ndict.update({"updated_at": self.updated_at.isoformat()})
