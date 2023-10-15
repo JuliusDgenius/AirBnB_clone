@@ -58,16 +58,17 @@ class FileStorage:
 
         except Exception as e:
             print(e)
-
+    """
     def update(self, obj_name, obj_id, attr, value):
-        """updates object with id 'obj_id'"""
+        updates object with id 'obj_id
         model = self.__objects["{}.{}".format(obj_name, obj_id)]
         setattr(model, attr, value)
 
     def find(self, obj_name, obj_id):
-        """find object with id 'obj_id'"""
+        find object with id 'obj_id
         return self.__objects["{}.{}".format(obj_name, obj_id)]
 
     def delete(self, obj_name, obj_id):
-        """deletes object with id 'obj_id'"""
+        deletes object with id 'obj_id
         return self.__objects.pop("{}.{}".format(obj_name, obj_id))
+    """
