@@ -169,7 +169,8 @@ class TestBaseModel(unittest.TestCase):
         self.resetStorage()
         with self.assertRaises(TypeError) as e:
             BaseModel.save()
-        msg = "save() missing 1 required positional argument: 'self'"                self.assertEqual(str(e.exception), msg)
+        msg = "save() missing 1 required positional argument: 'self'"
+        self.assertEqual(str(e.exception), msg)
 
     def test_5_save_excess_args(self):
         """Tests save() with too many arguments."""
