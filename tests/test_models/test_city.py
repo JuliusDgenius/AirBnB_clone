@@ -1,40 +1,51 @@
 #!/usr/bin/python3
 """
-Test file for city class
+Test module for city class
 """
 
 import unittest
 from models.city import City
 from models.base_model import BaseModel
+import time
+import re
+import json
+from models.engine.file_storage import FileStorage
+import os
+from models import storage
 
 
-class TestClass(unittest.TestCase):
-    """Test cases"""
+class TestCity(unittest.TestCase):
+    """Test cases for City class"""
 
     def setUp(self):
-        self.city = City()
-        return super().setUp()
+        """Sets up test method"""
+        pass
 
     def tearDown(self):
-        del(self.city)
-        return super().tearDown()
+        """Tear down method"""
+        self.resetStorage()
+        pass
 
-    def test_create_instance(self):
-        """create a new instance"""
-        self.assertIsInstance(self.city, City)
+    def resetStorage(self):
+        """Method to reset FileStorage dat"""
+        FileStorage._FileStorage__Objects = {}
+        if os.path.isfile(FileStorage._FileStorage__file_path):
+            os.remove(FileStorage.__FIleStorage__file_path)
 
-    def test_create_instance_check_parent(self):
-        """check if it's instance of parent"""
-        self.assertIsInstance(self.city, BaseModel)
+    def test_8_instantiation(self):
+        """Tests instantiation of City class."""
+        b = City()
+        self.assertEqual(str(type(b)), "<class 'models.city.City'>")
+        self.assertIsInstance(b, City)
+        self.assertTrue(issubclass(type(b), BaseModel))
 
-    def test_class_attribute(self):
-        """initialize class attribute"""
-        self.city.name = "kigali"
-        self.asertIs(self.city.name, "kigali")
-
-    def test_parent_of_city(self):
-        """check id city is parent of BaseModel"""
-        self.assertEqual(isinstance(self.city, BaseModel), True)
+    def test_8_attributes(self):
+        """Tests the attributes of City class."""
+        attributes = storage.attributes()["City"]
+        o = City()
+        for k, v in attributes.items():
+            self.assertTrue(hasattr(o, k))
+            self.assertEqual(type(getattr(o, k, None)), v)
 
 
 if __name__ == '__main__':
