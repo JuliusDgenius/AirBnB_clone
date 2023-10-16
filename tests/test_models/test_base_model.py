@@ -117,16 +117,16 @@ class TestBaseModel(unittest.TestCase):
         self.resetStorage()
         with self.assertRaises(TypeError) as e:
             BaseModel.to_dict()
-            msg = "to_dict() missing 1 required positional argument: 'self'"
-            self.assertEqual(str(e.exception), msg)
+        msg = "to_dict() missing 1 required positional argument: 'self'"
+        self.assertEqual(str(e.exception), msg)
 
     def test_3_to_dict_excess_args(self):
         """Tests to_dict() with too many arguments."""
         self.resetStorage()
         with self.assertRaises(TypeError) as e:
             BaseModel.to_dict(self, 98)
-            msg = "to_dict() takes 1 positional argument but 2 were given"
-            self.assertEqual(str(e.exception), msg)
+        msg = "to_dict() takes 1 positional argument but 2 were given"
+        self.assertEqual(str(e.exception), msg)
 
     def test_4_instantiation(self):
         """Tests instantiation with **kwargs."""
@@ -169,16 +169,15 @@ class TestBaseModel(unittest.TestCase):
         self.resetStorage()
         with self.assertRaises(TypeError) as e:
             BaseModel.save()
-            msg = "save() missing 1 required positional argument: 'self'"
-            self.assertEqual(str(e.exception), msg)
+        msg = "save() missing 1 required positional argument: 'self'"                self.assertEqual(str(e.exception), msg)
 
     def test_5_save_excess_args(self):
         """Tests save() with too many arguments."""
         self.resetStorage()
         with self.assertRaises(TypeError) as e:
             BaseModel.save(self, 98)
-            msg = "save() takes 1 positional argument but 2 were given"
-            self.assertEqual(str(e.exception), msg)
+        msg = "save() takes 1 positional argument but 2 were given"
+        self.assertEqual(str(e.exception), msg)
 
 
 if __name__ == '__main__':
