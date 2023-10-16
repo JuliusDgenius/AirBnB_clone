@@ -2,30 +2,51 @@
 """
 Test file for user class
 """
-
 import unittest
+from datetime import datetime
+import time
 from models.state import State
-from mdoels.base_model import BaseModel
+import re
+import json
+from models.engine.file_storage import FileStorage
+import os
+from models import storage
+from models.base_model import BaseModel
 
 
-class TestClass(unittest.TesCase):
-    """Test cases"""
+class TestState(unittest.TestCase):
+    """Test Cases for the State class."""
 
-    def test_create_instance(self):
-        """create a new instance"""
-        new_state = State()
-        self.assertIsInstance(new_state, State)
+    def setUp(self):
+        """Sets up test methods."""
+        pass
 
-    def test_create_instance2(self):
-        """create a new instance"""
-        new_state = State()
-        self.assertIsiInstance(new_state, State)
+    def tearDown(self):
+        """Tears down test methods."""
+        self.resetStorage()
+        pass
 
-    def test_create_instance2(self):
-        """create a new instance"""
-        new_state = State()
-        self.assertIsInstance(new_state, BaseModel)
+    def resetStorage(self):
+        """Resets FileStorage data."""
+        FileStorage._FileStorage__objects = {}
+        if os.path.isfile(FileStorage._FileStorage__file_path):
+            os.remove(FileStorage._FileStorage__file_path)
+
+    def test_8_instantiation(self):
+        """Tests instantiation of State class."""
+        b = State()
+        self.assertEqual(str(type(b)), "<class 'models.state.State'>")
+        self.assertIsInstance(b, State)
+        self.assertTrue(issubclass(type(b), BaseModel))
+
+    def test_8_attributes(self):
+        """Tests the attributes of State class."""
+        attributes = storage.attributes()["State"]
+        o = State()
+        for k, v in attributes.items():
+            self.assertTrue(hasattr(o, k))
+            self.assertEqual(type(getattr(o, k, None)), v)
 
 
-id __name__ == '__main__':
+if __name__ == '__main__':
     unittest.main()
