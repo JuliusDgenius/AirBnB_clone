@@ -2,7 +2,7 @@
 """BaseModel unittest module"""
 
 from datetime import datetime
-from import json
+import json
 from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
 from models import storage
