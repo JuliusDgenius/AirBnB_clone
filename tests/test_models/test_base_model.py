@@ -55,6 +55,19 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(type(dct["created_at"]), str)
         self.assertEqual(type(dct["updated_at"]), str)
 
+    def test_to_dict(self):
+        """Test conversion of object attributes to dictionary for json"""
+        my_model = BaseModel()
+        my_model.name = "My_First_Model"
+        my_model.my_number = 89
+        d = my_model.to_dict()
+        expected_attrs = ["id", "created_at", "updated_at", "name",
+                          "my_number", "__class__"]
+        self.assertCountEqual(d.keys(), expected_attrs)
+        self.assertEqual(d['__class__'], 'BaseModel')
+        self.assertEqual(d['name'], "My_First_Model")
+        self.assertEqual(d['my_number'], 89)
+
 
 if __name__ == "__main__":
     TestBaseModel()
