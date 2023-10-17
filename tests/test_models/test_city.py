@@ -16,7 +16,7 @@ class TestClass(unittest.TestCase):
         return super().setUp()
 
     def tearDown(self):
-        del(self.city)
+        del (self.city)
         return super().tearDown()
 
     def test_create_instance(self):
