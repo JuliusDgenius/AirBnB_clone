@@ -1,14 +1,14 @@
 #!/usr/bin/python3
 """
-Test file for user class
+Test Module for state class
 """
 
 import unittest
 from models.state import State
-from mdoels.base_model import BaseModel
+from models.base_model import BaseModel
 
 
-class TestClass(unittest.TesCase):
+class TestClass(unittest.TestCase):
     """Test cases"""
 
     def test_create_instance(self):
@@ -27,5 +27,5 @@ class TestClass(unittest.TesCase):
         self.assertIsInstance(new_state, BaseModel)
 
 
-id __name__ == '__main__':
+if __name__ == '__main__':
     unittest.main()

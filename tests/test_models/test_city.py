@@ -30,7 +30,7 @@ class TestClass(unittest.TestCase):
     def test_class_attribute(self):
         """initialize class attribute"""
         self.city.name = "kigali"
-        self.asertIs(self.city.name, "kigali")
+        self.assertIs(self.city.name, "kigali")
 
     def test_parent_of_city(self):
         """check id city is parent of BaseModel"""
