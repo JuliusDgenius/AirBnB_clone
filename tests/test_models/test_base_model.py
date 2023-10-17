@@ -4,7 +4,7 @@
 from models.base_model import BaseModel
 import unittest
 from datetime import datetime
-
+from unittest import mock
 
 class TestBaseModel(unittest.TestCase):
     """Defines the test cases for the BaseModel class"""
@@ -67,6 +67,18 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(d['__class__'], 'BaseModel')
         self.assertEqual(d['name'], "My_First_Model")
         self.assertEqual(d['my_number'], 89)
+
+    def test_save(self):
+        """Test that save method updates `updated_at` and calls
+        `storage.save`"""
+        inst = BaseModel()
+        old_created_at = inst.created_at
+        old_updated_at = inst.updated_at
+        inst.save()
+        new_created_at = inst.created_at
+        new_updated_at = inst.updated_at
+        self.assertNotEqual(old_updated_at, new_updated_at)
+        self.assertEqual(old_created_at, new_created_at)
 
 
 if __name__ == "__main__":
