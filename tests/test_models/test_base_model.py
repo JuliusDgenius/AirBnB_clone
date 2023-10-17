@@ -19,16 +19,16 @@ class TestBaseModel(unittest.TestCase):
 
     def test_id_instantiation(self):
         my_obj = BaseModel()
-        self.assertTrue(my_obj.id)
+        self.assertIs(type(my_obj.id), str)
 
-    def test_name_instantiation(self):
+    def test_diff_ID_instances(self):
         my_obj = BaseModel()
-        my_obj.name = "My First Model"
-        self.assertEqual(my_obj.name, "My First Model")
+        my_obj1 = BaseModel()
+        self.assertNotEqual(my_obj.id, my_obj1.id)
 
     def test_created_at(self):
         my_obj = BaseModel()
-        self.assertTrue(my_obj.created_at)
+        self.assertIs(type(my_obj.created_at), str)
 
     def test_created_at(self):
         my_obj = BaseModel()
@@ -39,6 +39,21 @@ class TestBaseModel(unittest.TestCase):
     def test_instance_BaseModel(self):
         my_obj = BaseModel()
         self.assertIsInstance(my_obj, BaseModel)
+
+    def test_str_method(self):
+        """Tests the __str__ method"""
+        my_obj = BaseModel()
+        s = "[{}] ({}) {}".format(my_obj.__class__.__name__,
+                                  my_obj.id, my_obj.__dict__)
+        self.assertEqual(str(my_obj), s)
+
+    def test_dict_method(self):
+        """Tests the dict method"""
+        my_obj = BaseModel()
+        dct = my_obj.to_dict()
+        self.assertEqual(dct["__class__"], "BaseModel")
+        self.assertEqual(type(dct["created_at"]), str)
+        self.assertEqual(type(dct["updated_at"]), str)
 
 
 if __name__ == "__main__":
