@@ -15,13 +15,11 @@ from models.state import State
 from models.user import User
 import json
 import os
-import pep8
 import unittest
 
 FileStorage = file_storage.FileStorage
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
-
 
 class TestFileStorageDocs(unittest.TestCase):
     """Tests to check the documentation and style of FileStorage class"""
@@ -41,7 +39,7 @@ class TestFileStorageDocs(unittest.TestCase):
         """Test tests/test_models/test_file_storage.py conforms to PEP8."""
         pep8s = pep8.StyleGuide(quiet=True)
         result = pep8s.check_files(['tests/test_models/test_engine/\
-                test_file_storage.py'])
+                                    test_file_storage.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
@@ -112,5 +110,4 @@ class TestFileStorage(unittest.TestCase):
         string = json.dumps(new_dict)
         with open("file.json", "r") as f:
             js = f.read()
-        self.assertEqual(json.loads(string), json.loads(js))for key, value in
-        new_dict.items():
+        self.assertEqual(json.loads(string), json.loads(js))
