@@ -6,6 +6,7 @@ import unittest
 from datetime import datetime
 from unittest import mock
 
+
 class TestBaseModel(unittest.TestCase):
     """Defines the test cases for the BaseModel class"""
 
