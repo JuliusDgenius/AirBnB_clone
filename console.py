@@ -149,7 +149,7 @@ class HBNBCommand(cmd.Cmd):
         else:
             obj1 = []
             for obj in storage.all().values():
-                if len(argl) > 0 and argl[0] == obj__class__.name__:
+                if len(argl) > 0 and argl[0] == obj.__class__.__name__:
                     obj1.append(obj.__str__())
                 elif len(argl) == 0:
                     obj1.append(obj.__str__())
@@ -196,7 +196,7 @@ class HBNBCommand(cmd.Cmd):
             except NameError:
                 print("** value missing **")
                 return False
-        
+
         if len(arg1) == 4:
             obj = obj_dict["{}.{}".format(argl[0], argl[1])]
             if argl[2] in obj.__class.__.__dict__.keys():
