@@ -133,7 +133,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
         elif len(argl) == 1:
             print("** instance id missing **")
-        elif "{}.{}".format(argl[0], argl[1]) not in oobj_dict.keys():
+        elif "{}.{}".format(argl[0], argl[1]) not in obj_dict.keys():
             print("** no instance found **")
         else:
             del obj_dict["{}.{}".format(argl[0], argl[1])]
@@ -197,10 +197,10 @@ class HBNBCommand(cmd.Cmd):
                 print("** value missing **")
                 return False
 
-        if len(arg1) == 4:
+        if len(argl) == 4:
             obj = obj_dict["{}.{}".format(argl[0], argl[1])]
-            if argl[2] in obj.__class.__.__dict__.keys():
-                valtype = type(obj.__class.__.__dict__[argl[2]])
+            if argl[2] in obj.__class__.__dict__.keys():
+                valtype = type(obj.__class__.__dict__[argl[2]])
                 obj.__dict__[argl[2]] = valtype(argl[3])
             else:
                 obj.__dict__[argl[2]] = argl[3]
